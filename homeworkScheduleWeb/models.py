@@ -1,20 +1,22 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
-class ClassCategory(models.Model):
-    name = models.TextField()
+class Class(models.Model):
+    name = models.TextField(default='', null=False)
 
 
 class Assignment(models.Model):
-    name = models.TextField()
-    content = models.TextField()
-    class_id = models.ForeignKey('ClassCategory', models.CASCADE, null=False)
+    name = models.TextField(default='', null=False)
+    content = models.TextField(default='', null=False)
+    class_id = models.ForeignKey('Class', models.CASCADE, null=False)
 
 
 class Comment(models.Model):
-    content = models.TextField()
+    content = models.TextField(default='', null=False)
     assignment_id = models.ForeignKey('Assignment', models.CASCADE, null=False)
-    class_id = models.ForeignKey('ClassCategory', models.CASCADE, null=False)
-    status = models.CharField(max_length=1)
+    class_id = models.ForeignKey('Class', models.CASCADE, null=False)
+    # 1 is active, 0 is deleted
+    status = models.CharField(max_length=1, default='1', null=False)
     created = models.DateTimeField(auto_now_add=True, blank=True)
-    user_type = models.CharField(max_length=1, default='')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
