@@ -6,7 +6,7 @@ from rest_framework.mixins import ListModelMixin
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Assignment, Comment, Class
+from .models import Assignment, Comment, ClassName
 from .serializers import AssignmentSerializer, CommentSerializer, ClassSerializer
 
 
@@ -15,27 +15,28 @@ def myView(request):
     return render(request, 'dashboard.html')
 
 
-class Assignment(generics.ListCreateAPIView):
-    queryset = Assignment.objects.all()
+class AssignmentViewSet(generics.ListCreateAPIView):
     serializer_class = AssignmentSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, *kwargs)
+    def get_queryset(self):
+        queryset = Assignment.objects.all().prefetch_related('comments')
+        id = self.kwargs.get('pk', None)
+        if id is not None:
+            queryset = queryset.filter(id=id)
+        return queryset
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
 
-
-class ListComment(generics.ListCreateAPIView):
-    queryset = Comment.objects.all()
+class CommentViewSet(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
 
+    def get_queryset(self):
+        queryset = Comment.objects.all()
+        id = self.kwargs.get('pk', None)
+        if id is not None:
+            queryset = queryset.filter(id=id)
+        return queryset
 
-class DetailComment(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
 
-
-class ListClass(generics.ListCreateAPIView):
-    queryset = Class.objects.all()
+class ClassViewSet(generics.ListCreateAPIView):
+    queryset = ClassName.objects.all()
     serializer_class = ClassSerializer
