@@ -23,6 +23,10 @@ class AssignmentViewSet(generics.ListCreateAPIView):
         id = self.kwargs.get('pk', None)
         if id is not None:
             queryset = queryset.filter(id=id)
+
+        class_id = self.request.query_params.get('class_id', None)
+        if class_id is not None:
+            queryset = queryset.filter(class_id=class_id)
         return queryset
 
 
