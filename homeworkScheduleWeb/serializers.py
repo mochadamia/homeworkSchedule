@@ -9,8 +9,10 @@ class ClassSerializer(serializers.ModelSerializer):
 
 
 class CommentSimpleSerializer(serializers.ModelSerializer):
+    created = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+
     class Meta:
-        fields = '__all__'
+        fields = ('id', 'content', 'created', 'status', 'user_id')
         model = Comment
 
 
