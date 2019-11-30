@@ -15,18 +15,22 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import path, include
 from homeworkScheduleWeb.views import dashboard_view, class_View, assignments_view, assignment_view, delete_assignment, \
     comments_view, delete_comment
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+    ##url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^admin/', admin.site.urls),
     url(r'^api', include('homeworkScheduleWeb.urls')),
-    url(r'^homePage/', dashboard_view),
-    url(r'^classes/', class_View),
-    url('^assignments/(?P<class_id>\d+)/$', assignments_view),
-    url('^assignment_preview/(?P<id>\d+)/$', assignment_view),
+    url(r'^homePage/', login_required(dashboard_view)),
+    url(r'^classes/', login_required(class_View)),
+    url('^assignments/(?P<class_id>\d+)/$', login_required(assignments_view)),
+    url('^assignment_preview/(?P<id>\d+)/$', login_required(assignment_view)),
     url('^delete_assignment/(?P<pk>\d+)/(?P<class_id>\d+)/$', delete_assignment),
-    url('^comments/', comments_view),
+    url('^comments/', login_required(comments_view)),
     url('^delete_comment/(?P<pk>\d+)/$', delete_comment),
 ]
