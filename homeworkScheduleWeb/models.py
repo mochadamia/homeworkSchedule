@@ -5,8 +5,8 @@ from django.db import models
 class ClassName(models.Model):
     name = models.TextField(default='', null=False)
 
-    def __str__(self):
-        return self.name
+    #def __str__(self):
+     #   return self.name
 
 
 class Assignment(models.Model):
@@ -14,8 +14,8 @@ class Assignment(models.Model):
     content = models.TextField(default='', null=False)
     class_id = models.ForeignKey('ClassName', on_delete=models.CASCADE, null=False)
 
-    def __str__(self):
-        return self.name
+    #def __str__(self):
+       # return self.name
 
 
 class Comment(models.Model):

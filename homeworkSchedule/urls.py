@@ -16,10 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
-from homeworkScheduleWeb.views import myView
+from homeworkScheduleWeb.views import dashboard_view, class_View, assignments_view, assignment_view
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api', include('homeworkScheduleWeb.urls')),
-    url('^sayHello/', myView),
+    url(r'^homePage/', dashboard_view),
+    url(r'^classes/', class_View),
+    url('^assignments/(?P<class_id>\d+)/$', assignments_view),
+    url('^assignment_preview/(?P<id>\d+)/$', assignment_view),
 ]
