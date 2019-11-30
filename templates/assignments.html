@@ -24,7 +24,7 @@
               <th scope="row"> {{ assignment.name}}</th>
                 <td><a href="/assignment_preview/{{assignment.id}}"> View</a></td>
                 <td><a href="#"> Edit</a></td>
-                <td><a href="#"> Delete</a></td>
+                <td><a href="/delete_assignment/{{assignment.id}}/{{class_id}}"> Delete</a></td>
             </tr>
             {% endfor %}
           </tbody>

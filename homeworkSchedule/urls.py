@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
-from homeworkScheduleWeb.views import dashboard_view, class_View, assignments_view, assignment_view
+from homeworkScheduleWeb.views import dashboard_view, class_View, assignments_view, assignment_view, delete_assignment
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^classes/', class_View),
     url('^assignments/(?P<class_id>\d+)/$', assignments_view),
     url('^assignment_preview/(?P<id>\d+)/$', assignment_view),
+    url('^delete_assignment/(?P<pk>\d+)/(?P<class_id>\d+)/$', delete_assignment)
 ]

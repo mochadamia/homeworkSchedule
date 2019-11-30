@@ -24,7 +24,7 @@ def class_View(request):
 
 def assignments_view(request, class_id):
     assignments = list(Assignment.objects.filter(class_id=class_id))
-    data = {'assignments': assignments}
+    data = {'assignments': assignments, 'class_id': class_id}
     return render(request, 'assignments.html', data)
 
 
@@ -49,6 +49,12 @@ def assignment_view(request, id):
 
     data = {'assignment': assignment, 'comments': comments, 'form': form}
     return render(request, 'preview_assignment.html', data)
+
+
+def delete_assignment(request, pk, class_id):
+    query = Assignment.objects.get(pk=pk)
+    query.delete()
+    return HttpResponseRedirect("/assignments/" + class_id)
 
 
 class AssignmentViewSet(generics.ListCreateAPIView):
