@@ -28,6 +28,12 @@ def assignments_view(request, class_id):
     return render(request, 'assignments.html', data)
 
 
+def comments_view(request):
+    comments = list(Comment.objects.all().order_by('-id'))
+    data = {'comments': comments}
+    return render(request, 'comments.html', data)
+
+
 def assignment_view(request, id):
     if request.method == 'POST':
         form = PostComment(request.POST)
@@ -56,6 +62,11 @@ def delete_assignment(request, pk, class_id):
     query.delete()
     return HttpResponseRedirect("/assignments/" + class_id)
 
+
+def delete_comment(request, pk):
+    query = Comment.objects.get(pk=pk)
+    query.delete()
+    return HttpResponseRedirect("/comments/" )
 
 class AssignmentViewSet(generics.ListCreateAPIView):
     serializer_class = AssignmentSerializer
