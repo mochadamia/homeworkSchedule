@@ -1,12 +1,13 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 
 class ClassName(models.Model):
     name = models.TextField(default='', null=False)
 
-    #def __str__(self):
-     #   return self.name
+    def __str__(self):
+       return self.name
 
 
 class Assignment(models.Model):
@@ -16,7 +17,9 @@ class Assignment(models.Model):
 
     #def __str__(self):
        # return self.name
-
+    #
+    def get_absolute_url(self):
+        return reverse('previewAssignment', kwargs={'id': self.pk})
 
 class Comment(models.Model):
     content = models.TextField(default='', null=False)

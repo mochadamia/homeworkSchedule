@@ -1,13 +1,14 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from rest_framework import generics
 from rest_framework.generics import GenericAPIView, get_object_or_404
 from rest_framework.mixins import ListModelMixin
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from homeworkScheduleWeb.forms import PostComment
+from homeworkScheduleWeb.forms import PostComment, AssignmentForm
 from .models import Assignment, Comment, ClassName
 from .serializers import AssignmentSerializer, CommentSerializer, ClassSerializer
 
@@ -97,3 +98,15 @@ class CommentViewSet(generics.ListCreateAPIView):
 class ClassViewSet(generics.ListCreateAPIView):
     queryset = ClassName.objects.all()
     serializer_class = ClassSerializer
+
+
+class AddAssignment(CreateView):
+    form_class = AssignmentForm
+    model = Assignment
+    template_name = 'assignment.html'
+
+
+class UpdateAssignment(UpdateView):
+    form_class = AssignmentForm
+    model = Assignment
+    template_name = 'assignment.html'
