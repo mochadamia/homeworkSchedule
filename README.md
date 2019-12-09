@@ -4,6 +4,7 @@ it provided the APIs for mini WeChat program to fetch and post information.
 
 ## How to run it
 * `pipenv install` to install required dependencies
+* `pipenv shell` to enter virtual environment
 * `python manage.py runserver` to start the server
 *  You should see
     ```
